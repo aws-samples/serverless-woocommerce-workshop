@@ -11,6 +11,8 @@ To build and deploy this stack, please have the following tools installed.
 - aws cli
 - aws cdk
 
+You also need a DNS domain hosted in Route53. 
+
 ## Configuration
 
 This stack use .env file to provide configuration values. 
@@ -30,3 +32,10 @@ Deploy the stack
 ```shell
 make deploly
 ````
+
+When the deployment is done, open WP_HOME to complete the normal WordPress setup process.
+
+## Install Plugins and Themes
+
+In this demo, WordPress code, plugins and themes are packaged in Lambda and are read-only. And we use Bedrock to manage WordPress plugins and themes. 
+Check out [Bedrock documents](https://roots.io/bedrock/) on how to install/update wordpress plugins and themes. 
