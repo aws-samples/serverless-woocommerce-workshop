@@ -10,6 +10,7 @@ To build and deploy this stack, please have the following tools installed.
 - node.js
 - aws cli
 - aws cdk
+- gnu make
 
 You also need a DNS domain hosted on Route53. 
 
@@ -18,6 +19,13 @@ You also need a DNS domain hosted on Route53.
 This stack use .env file to provide configuration values. 
 
 Copy cdk/.env.example to cdk/.env and update the values to fit your needs. 
+
+Then install CDK dependencies
+
+```shell
+cd cdk
+npm install 
+```
 
 ## Deployment
 
