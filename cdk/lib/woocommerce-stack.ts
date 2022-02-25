@@ -23,30 +23,6 @@ export class WooCommerceStack extends Stack {
     // default security group
     const wcDefaultSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'defaultsg', wcVPC.vpcDefaultSecurityGroup);
 
-    // EFS File System
-    // const wcFileSystem = new efs.FileSystem(this, 'efs', {
-    //   vpc: wcVPC,
-    //   vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_NAT },
-    //   performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
-    //   lifecyclePolicy: efs.LifecyclePolicy.AFTER_7_DAYS,
-    //   enableAutomaticBackups: true,
-    //   securityGroup: wcDefaultSecurityGroup,
-    // });
-
-    // EFS Access Point
-    // const wcAccessPoint = wcFileSystem.addAccessPoint('AccessPoint', {
-    //   path: '/lambda',
-    //   createAcl: {
-    //     ownerUid: '1000',
-    //     ownerGid: '1000',
-    //     permissions: '0755',
-    //   },
-    //   posixUser: {
-    //     uid: '1000',
-    //     gid: '1000',
-    //   },
-    // });
-
     // Aurora Mysql Database
     const wcRdsCluster = new rds.DatabaseCluster(this, 'database', {
       engine: rds.DatabaseClusterEngine.auroraMysql({ version: rds.AuroraMysqlEngineVersion.VER_2_08_1 }),
@@ -61,15 +37,6 @@ export class WooCommerceStack extends Stack {
         securityGroups: [wcDefaultSecurityGroup],
       },
     });
-
-    // RDS Proxy
-    // const wcRdsProxy = wcRdsCluster.addProxy('proxy', {
-    //   borrowTimeout: Duration.seconds(30),
-    //   maxConnectionsPercent: 90,
-    //   secrets: [wcRdsCluster.secret!],
-    //   vpc: wcVPC,
-    //   securityGroups: [wcDefaultSecurityGroup],
-    // });
 
     // ElastiCache
     const wcCacheSubnetGroup = new elasticache.CfnSubnetGroup(this, 'wcCacheSubnetGroup', {
@@ -99,7 +66,6 @@ export class WooCommerceStack extends Stack {
       timeout: Duration.seconds(300),
       vpc: wcVPC,
       vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_NAT },
-      // filesystem: lambda.FileSystem.fromEfsAccessPoint(wcAccessPoint, this.node.tryGetContext('EFS_PATH')),
       tracing: lambda.Tracing.ACTIVE,
       securityGroups: [wcDefaultSecurityGroup],
       environment: {
@@ -135,16 +101,11 @@ export class WooCommerceStack extends Stack {
     // Lambda Alias
     const liveAlias = wcFunction.currentVersion.addAlias('live');
 
-    // Grant Lambda access to rds proxy
-    // wcRdsProxy.grantConnect(wcFunction);
-
     // Grant Lambda read/write access to the s3 bucket
     wcBucket.grantReadWrite(wcFunction);
     wcBucket.grantPutAcl(wcFunction);
 
-    // wcCacheCluster.
-
-    // API Gateway 
+    // API Gateway
     const stageName = 'live';
     const wcAPI = new apigateway.LambdaRestApi(this, 'api', {
       handler: liveAlias,

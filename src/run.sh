@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ ! -d "/mnt/share" ]
-then 
-    mkdir /mnt/share
-fi
-
 if [ -d "/app/opcache" -a ! -d "/tmp/opcache" ]
 then
     mkdir /tmp/opcache
