@@ -21,9 +21,9 @@ RUN mkdir /tmp/opcache && chmod 777 /tmp/opcache \
 
 
 FROM public.ecr.aws/amazonlinux/amazonlinux:2.0.20220121.0
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.2.0 /opt/extensions/lambda-adapter /opt/extensions/lambda-adapter
 
-RUN amazon-linux-extras install -y nginx1 php7.4 && yum clean all && rm -rf /var/cache/yum
+RUN amazon-linux-extras install -y nginx1 php7.4
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.2.0 /opt/extensions/lambda-adapter /opt/extensions/lambda-adapter
 
 ADD config/nginx/ /etc/nginx/
 ADD config/php/ /etc/
