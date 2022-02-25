@@ -11,7 +11,7 @@ To build and deploy this stack, please have the following tools installed.
 - aws cli
 - aws cdk
 
-You also need a DNS domain hosted in Route53. 
+You also need a DNS domain hosted on Route53. 
 
 ## Configuration
 
