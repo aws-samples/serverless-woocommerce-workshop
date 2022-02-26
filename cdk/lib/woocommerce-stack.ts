@@ -157,7 +157,7 @@ export class WooCommerceStack extends Stack {
       comment: 'api gateway origin request policy for ' + this.stackName,
       queryStringBehavior: cloudfront.OriginRequestQueryStringBehavior.all(),
       headerBehavior: cloudfront.OriginRequestHeaderBehavior.allowList('Accept', 'Cache-Control', 'Content-Encoding',
-        'Content-Type', 'Origin', 'Referer', 'X-Forwarded-Host', 'x-wp-nonce'),
+        'Content-Type', 'Origin', 'Referer', 'User-Agent', 'X-Forwarded-Host', 'X-WP-Nonce'),
       cookieBehavior: cloudfront.OriginRequestCookieBehavior.all(),
     });
     const wcS3CachePolicy = new cloudfront.CachePolicy(this, 'wcS3CachePolicy', {
