@@ -195,7 +195,8 @@ export class WooCommerceStack extends Stack {
       comment: 'Distribution for ' + this.stackName,
       defaultBehavior: {
         origin: new origins.HttpOrigin(wcAPI.url.substring("https://".length, wcAPI.url.indexOf("/", "https://".length)), {
-          originPath: stageName
+          originPath: stageName,
+          readTimeout: Duration.seconds(60)
         }),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
