@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repo contains k6 scripts interacting with a basic WooCommerce website hosted at https://dog.lambdashop.xyz.
+This repo contains k6 scripts interacting with your WooCommerce website.
 
 The scripts have been modularized so that each distinct "user action" manifests as its own source file, intended to be used from the entry script, in this case `main.js`. Doing so promotes code reuse and maintainability, as well as catering for some degree of flexibility over the order in which the scripts should run. Obviously, products need to have been added to the cart before checkout can be completed successfully, so there is some sequence that needs to be maintained for them to work as expected.
 
@@ -12,7 +12,7 @@ Please note that the server hosting the site is not scaled for heavy loads; the 
 
 1. Install [k6](https://k6.io) (instructions [here](https://k6.io/docs/getting-started/installation/))
 2. Clone the repo
-3. Navigate to the directory and `k6 run -e HOSTNAME=dog.lambdashop.xyz main.js` (make sure k6 is on your PATH)
+3. Navigate to the directory and `k6 run -e HOSTNAME=<your woocommerce website domain name> main.js` (make sure k6 is on your PATH)
 
 ## Contents
 
