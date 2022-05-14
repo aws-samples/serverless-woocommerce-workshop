@@ -104,17 +104,15 @@ Config::define('DISALLOW_FILE_EDIT', true);
 Config::define('DISALLOW_FILE_MODS', true);
 // Limit the number of post revisions that Wordpress stores (true (default WP): store every revision)
 Config::define('WP_POST_REVISIONS', env('WP_POST_REVISIONS') ?: true);
-// humanmade/S3-Upload plugin configuration
-Config::define('S3_UPLOADS_BUCKET', env('S3_UPLOADS_BUCKET') . '/app');
-Config::define('S3_UPLOADS_REGION', env('AWS_REGION'));
-Config::define('S3_UPLOADS_KEY', env('AWS_ACCESS_KEY_ID'));
-Config::define('S3_UPLOADS_SECRET', env('AWS_SECRET_ACCESS_KEY'));
-Config::define('S3_UPLOADS_HTTP_CACHE_CONTROL', 24 * 60 * 60 * 365 );
-Config::define('S3_UPLOADS_DISABLE_REPLACE_UPLOAD_URL', true);
-// Elasticache Memcached Configuration Endpoint
-Config::define('MEMCACHED_CFG_ENDPOINT', env('MEMCACHED_CFG_ENDPOINT'));
-Config::define('MEMCACHED_PORT', env('MEMCACHED_PORT'));
-Config::define('WP_CACHE_KEY_SALT', env('WP_CACHE_KEY_SALT'));
+
+// Elasticache Redis Configuration Endpoint
+Config::define('WP_REDIS_HOST', env('REDIS_CFG_ENDPOINT'));
+Config::define('WP_REDIS_PORT', env('REDIS_PORT'));
+Config::define('WP_REDIS_TIMEOUT', env('REDIS_TIMEOUT'));
+Config::define('WP_REDIS_READ_TIMEOUT', env('REDIS_READ_TIMEOUT'));
+Config::define('WP_REDIS_DATABASE', env('REDIS_DATABASE'));
+// bypass the object cache, useful for debugging
+Config::define('WP_REDIS_DISABLED', env('REDIS_DISABLED'));
 
 /**
  * Debugging Settings
@@ -151,15 +149,6 @@ if (file_exists($env_config)) {
 }
 
 Config::apply();
-
-/**
- * Configure Memcached Servers
- */
-$memcached_servers = array(
-    'default' => array(
-        MEMCACHED_CFG_ENDPOINT . ':' . MEMCACHED_PORT
-    )
-);
 
 /**
  * Bootstrap WordPress
