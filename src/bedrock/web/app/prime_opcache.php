@@ -22,7 +22,7 @@ function get_all_directory_and_files($dir){
      return $php_files;
 }
 
-$entry = empty($argv[1]) ? '/app/bedrock/' : $argv[1];
+$entry = empty($argv[1]) ? '/srv/bedrock/' : $argv[1];
 $files = get_all_directory_and_files($entry);
 $count_of_files = count($files);
 echo 'Total ' . $count_of_files . ' php files' . PHP_EOL;
@@ -47,5 +47,3 @@ foreach ($files as $file) {
 
 echo 'Cached ' . $compiled . ' files' . PHP_EOL;
 echo 'Skipped: ' . $failed . ' files' . PHP_EOL;
-
-exit(0);

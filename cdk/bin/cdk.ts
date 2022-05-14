@@ -10,4 +10,4 @@ const env_development = {
     region: process.env.CDK_DEFAULT_REGION,
 };
 
-new WooCommerceStack(app, 'WooCommerceStack', { env: env_development });
+new WooCommerceStack(app, 'eshop-test', { env: env_development });
