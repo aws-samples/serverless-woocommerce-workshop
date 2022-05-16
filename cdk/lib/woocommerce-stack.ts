@@ -33,97 +33,17 @@ export class WooCommerceStack extends Stack {
     const wcDefaultSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'defaultsg', wcVPC.vpcDefaultSecurityGroup);
 
     // RDS Mysql Database
-    // const wcRdsCluster = new rds.DatabaseInstance(this, 'database', {
-    //   engine: rds.DatabaseInstanceEngine.mysql({ version: rds.MysqlEngineVersion.VER_5_7_30 }),
-    //   credentials: rds.Credentials.fromGeneratedSecret(this.node.tryGetContext('DB_USER')),
-    //   databaseName: 'wordpress',
-    //   instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
-    //   vpcSubnets: {
-    //     subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
-    //   },
-    //   vpc: wcVPC,
-    //   securityGroups: [wcDefaultSecurityGroup]
-    // });
-
-    // Aurora Serverless V2
-    enum ServerlessInstanceType {
-      SERVERLESS = 'serverless',
-    }
-
-    type CustomInstanceType = ServerlessInstanceType | ec2.InstanceType;
-
-    const CustomInstanceType = { ...ServerlessInstanceType, ...ec2.InstanceType };
-
-    const InstanceCount = 1;
-
-    const wcRdsCluster = new rds.DatabaseCluster(this, 'DbCluster', {
-      engine: rds.DatabaseClusterEngine.auroraMysql({
-        version: rds.AuroraMysqlEngineVersion.of(
-          '8.0.mysql_aurora.3.02.0'
-        ),
-      }),
-      parameterGroup: rds.ParameterGroup.fromParameterGroupName(
-        this,
-        'rdsClusterPrameterGroup',
-        'default.aurora-mysql8.0'
-      ),
+    const wcRdsCluster = new rds.DatabaseInstance(this, 'database', {
+      engine: rds.DatabaseInstanceEngine.mysql({ version: rds.MysqlEngineVersion.VER_5_7_30 }),
       credentials: rds.Credentials.fromGeneratedSecret(this.node.tryGetContext('DB_USER')),
-      defaultDatabaseName: 'wordpress',
-      instances: InstanceCount,
-      instanceProps: {
-        vpc: wcVPC,
-        instanceType: CustomInstanceType.SERVERLESS as unknown as ec2.InstanceType,
-        autoMinorVersionUpgrade: false,
-        publiclyAccessible: false,
-        securityGroups: [
-          wcDefaultSecurityGroup,
-        ],
-        vpcSubnets: {
-          subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
-        },
+      databaseName: 'wordpress',
+      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
       },
-    })
-
-    const serverlessV2ScalingConfiguration = {
-      MinCapacity: 0.5,
-      MaxCapacity: 128,
-    }
-
-    const dbScalingConfigure = new AwsCustomResource(this, 'DbScalingConfigure', {
-      onCreate: {
-        service: "RDS",
-        action: "modifyDBCluster",
-        parameters: {
-          DBClusterIdentifier: wcRdsCluster.clusterIdentifier,
-          ServerlessV2ScalingConfiguration: serverlessV2ScalingConfiguration,
-        },
-        physicalResourceId: PhysicalResourceId.of(wcRdsCluster.clusterIdentifier)
-      },
-      onUpdate: {
-        service: "RDS",
-        action: "modifyDBCluster",
-        parameters: {
-          DBClusterIdentifier: wcRdsCluster.clusterIdentifier,
-          ServerlessV2ScalingConfiguration: serverlessV2ScalingConfiguration,
-        },
-        physicalResourceId: PhysicalResourceId.of(wcRdsCluster.clusterIdentifier)
-      },
-      policy: AwsCustomResourcePolicy.fromSdkCalls({
-        resources: AwsCustomResourcePolicy.ANY_RESOURCE,
-      }),
-    })
-
-    const cfnDbCluster = wcRdsCluster.node.defaultChild as rds.CfnDBCluster
-    const dbScalingConfigureTarget = dbScalingConfigure.node.findChild("Resource").node.defaultChild as CfnResource
-
-    cfnDbCluster.addPropertyOverride("EngineMode", "provisioned")
-    dbScalingConfigure.node.addDependency(cfnDbCluster)
-
-
-    for (let i = 1; i <= InstanceCount; i++) {
-      (wcRdsCluster.node.findChild(`Instance${i}`) as rds.CfnDBInstance).addDependsOn(dbScalingConfigureTarget)
-    }
-
+      vpc: wcVPC,
+      securityGroups: [wcDefaultSecurityGroup]
+    });
 
 
     // ElastiCache

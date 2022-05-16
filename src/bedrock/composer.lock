@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0785da3524c0d4b9b80c9959db6541ba",
+    "content-hash": "e1a6d6f11ca8a7ae821982ec3300953b",
     "packages": [
         {
             "name": "composer/installers",
@@ -1089,24 +1089,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/blocksy-companion/"
-        },
-        {
-            "name": "wpackagist-plugin/brizy",
-            "version": "2.3.37",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/brizy/",
-                "reference": "tags/2.3.37"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/brizy.2.3.37.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/brizy/"
         },
         {
             "name": "wpackagist-plugin/query-monitor",
