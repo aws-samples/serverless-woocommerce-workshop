@@ -49,8 +49,7 @@
     "wpackagist-plugin/batcache": "^1.5",
     "wpackagist-plugin/redis-cache": "^2.0",
     "wpackagist-theme/storefront": "^4.1",
-    "wpackagist-theme/astra": "^3.8",
-    "wpackagist-plugin/brizy": "^2.3"
+    "wpackagist-theme/astra": "^3.8"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.6.2",
