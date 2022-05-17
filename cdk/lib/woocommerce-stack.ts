@@ -89,7 +89,7 @@ export class WooCommerceStack extends Stack {
 
     // Lambda Function
     const wcFunction = new lambda.DockerImageFunction(this, 'woocommerce', {
-      architecture: lambda.Architecture.ARM_64,
+      architecture: lambda.Architecture.X86_64,
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '..', '..', 'src')),
       memorySize: 2048,
       timeout: Duration.seconds(300),
