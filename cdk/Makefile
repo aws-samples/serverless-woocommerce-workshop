@@ -2,7 +2,6 @@ include .env
 export
 
 diff:
-	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 	cdk diff -c WP_ENV=$(WP_ENV) -c WP_HOME=$(WP_HOME) -c WP_SITEURL=$(WP_SITEURL) -c DB_USER=$(DB_USER) \
 		-c AUTH_KEY=$(AUTH_KEY) -c SECURE_AUTH_KEY=$(SECURE_AUTH_KEY) -c LOGGED_IN_KEY=$(LOGGED_IN_KEY) \
 		-c NONCE_KEY=$(NONCE_KEY) -c AUTH_SALT=$(AUTH_SALT) -c SECURE_AUTH_SALT=$(SECURE_AUTH_SALT) \
@@ -10,7 +9,6 @@ diff:
 		-c RUST_LOG=$(RUST_LOG) -c ROUTE53_HOSTEDZONE=$(ROUTE53_HOSTEDZONE) -c ROUTE53_SITENAME=$(ROUTE53_SITENAME) -c WP_CACHE_KEY_SALT=$(WP_CACHE_KEY_SALT)
  
 deploy:
-	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 	cdk deploy -c WP_ENV=$(WP_ENV) -c WP_HOME=$(WP_HOME) -c WP_SITEURL=$(WP_SITEURL) -c DB_USER=$(DB_USER) \
 		-c AUTH_KEY=$(AUTH_KEY) -c SECURE_AUTH_KEY=$(SECURE_AUTH_KEY) -c LOGGED_IN_KEY=$(LOGGED_IN_KEY) \
 		-c NONCE_KEY=$(NONCE_KEY) -c AUTH_SALT=$(AUTH_SALT) -c SECURE_AUTH_SALT=$(SECURE_AUTH_SALT) \
