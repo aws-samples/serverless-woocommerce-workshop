@@ -1,6 +1,7 @@
 # Serverless WooCommerce
 
-Highly scalable WooCommerce on Serverless
+This is the code used for Serverless WooCommerce Workshop. Please find the detailed workshop guide [here](https://studio.us-east-1.prod.workshops.aws/preview/4dcb57f0-9831-452f-bd59-d03eb98ea063/builds/925f339c-3169-4601-bcd7-eb46dd59ae1c). 
+
 
 ## Prerequisites
 
@@ -38,7 +39,7 @@ make diff
 Deploy the stack
 
 ```shell
-make deploly
+make deploy
 ````
 
 When the deployment is done, open WP_HOME to complete the normal WordPress setup process.
@@ -48,6 +49,13 @@ When the deployment is done, open WP_HOME to complete the normal WordPress setup
 In this demo, WordPress code, plugins and themes are packaged in Lambda and are read-only. And we use Bedrock to manage WordPress plugins and themes. 
 Check out [Bedrock documents](https://roots.io/bedrock/) on how to install/update wordpress plugins and themes. 
 
+## Clean up
+
+Run the following command to delete ALL the resources deployed for this workshop, including the database, efs file system, redis cluster and s3 bucket. 
+
+```shell
+make destroy
+```
 
 ## Security
 
