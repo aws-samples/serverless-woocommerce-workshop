@@ -47,3 +47,12 @@ When the deployment is done, open WP_HOME to complete the normal WordPress setup
 
 In this demo, WordPress code, plugins and themes are packaged in Lambda and are read-only. And we use Bedrock to manage WordPress plugins and themes. 
 Check out [Bedrock documents](https://roots.io/bedrock/) on how to install/update wordpress plugins and themes. 
+
+
+## Security
+
+See [CONTRIBUTING](CONTRIBUTING.md) for more information.
+
+## License
+
+This library is licensed under the MIT-0 License. See the [LICENSE](LICENSE) file.
