@@ -3,7 +3,6 @@ import {
   aws_ec2 as ec2, aws_efs as efs, aws_lambda as lambda, aws_certificatemanager as acm, aws_elasticache as elasticache,
   aws_rds as rds, aws_s3 as s3, aws_route53 as route53, aws_route53_targets as route53targets, aws_cloudfront as cloudfront, aws_cloudfront_origins as origins, Lazy, CfnOutput, CfnResource
 } from 'aws-cdk-lib';
-import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from 'aws-cdk-lib/custom-resources';
 import { Construct } from 'constructs';
 import * as path from 'path';
 
@@ -12,15 +11,9 @@ export class WooCommerceStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // nat instance
-    const natGatewayProvider = ec2.NatProvider.instance({
-      instanceType: new ec2.InstanceType('t2.micro'),
-    });
-
     // VPC
     const wcVPC = new ec2.Vpc(this, 'vpc', {
       maxAzs: 2,
-      natGatewayProvider,
       natGateways: 1,
       gatewayEndpoints: {
         S3: {
@@ -32,19 +25,22 @@ export class WooCommerceStack extends Stack {
     // default security group
     const wcDefaultSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'defaultsg', wcVPC.vpcDefaultSecurityGroup);
 
-    // RDS Mysql Database
-    const wcRdsCluster = new rds.DatabaseInstance(this, 'database', {
-      engine: rds.DatabaseInstanceEngine.mysql({ version: rds.MysqlEngineVersion.VER_5_7_30 }),
+    // Aurora Mysql Database
+    const wcRdsCluster = new rds.DatabaseCluster(this, 'Database', {
+      engine: rds.DatabaseClusterEngine.auroraMysql({ version: rds.AuroraMysqlEngineVersion.of("8.0.mysql_aurora.3.02.0", "8.0") }),
       credentials: rds.Credentials.fromGeneratedSecret(this.node.tryGetContext('DB_USER')),
-      databaseName: 'wordpress',
-      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
+      defaultDatabaseName: 'wordpress',
+      instanceProps: {
+        instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.LARGE),
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
+        },
+        vpc: wcVPC,
+        securityGroups: [wcDefaultSecurityGroup],
       },
-      vpc: wcVPC,
-      securityGroups: [wcDefaultSecurityGroup]
     });
 
+    wcRdsCluster.applyRemovalPolicy(RemovalPolicy.DESTROY)
 
     // ElastiCache
     const wcCacheSubnetGroup = new elasticache.CfnSubnetGroup(this, 'wcCacheSubnetGroup', {
@@ -61,10 +57,15 @@ export class WooCommerceStack extends Stack {
       vpcSecurityGroupIds: [wcDefaultSecurityGroup.securityGroupId]
     })
 
+    wcCacheCluster.applyRemovalPolicy(RemovalPolicy.DESTROY)
+
     wcCacheCluster.addDependsOn(wcCacheSubnetGroup)
 
     // S3 Bucket
-    const wcBucket = new s3.Bucket(this, 'bucket');
+    const wcBucket = new s3.Bucket(this, 'bucket', {
+      removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+    });
 
     // efs file system
     const wcFileSystem = new efs.FileSystem(this, 'fileSystem', {
@@ -72,6 +73,7 @@ export class WooCommerceStack extends Stack {
       lifecyclePolicy: efs.LifecyclePolicy.AFTER_7_DAYS,
       performanceMode: efs.PerformanceMode.GENERAL_PURPOSE,
       securityGroup: wcDefaultSecurityGroup,
+      removalPolicy: RemovalPolicy.DESTROY,
     });
 
     const wcEfsAccessPoint = wcFileSystem.addAccessPoint('accessPoint', {
@@ -89,7 +91,7 @@ export class WooCommerceStack extends Stack {
 
     // Lambda Function
     const wcFunction = new lambda.DockerImageFunction(this, 'woocommerce', {
-      architecture: lambda.Architecture.X86_64,
+      architecture: lambda.Architecture.ARM_64,
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '..', '..', 'src')),
       memorySize: 2048,
       timeout: Duration.seconds(300),
