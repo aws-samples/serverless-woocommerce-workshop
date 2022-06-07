@@ -31,7 +31,7 @@ export class WooCommerceStack extends Stack {
       credentials: rds.Credentials.fromGeneratedSecret(this.node.tryGetContext('DB_USER')),
       defaultDatabaseName: 'wordpress',
       instanceProps: {
-        instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.LARGE),
+        instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MEDIUM),
         vpcSubnets: {
           subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
         },
