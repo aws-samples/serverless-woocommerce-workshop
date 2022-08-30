@@ -30,6 +30,7 @@ export class WooCommerceStack extends Stack {
       engine: rds.DatabaseClusterEngine.auroraMysql({ version: rds.AuroraMysqlEngineVersion.of("8.0.mysql_aurora.3.02.0", "8.0") }),
       credentials: rds.Credentials.fromGeneratedSecret(this.node.tryGetContext('DB_USER')),
       defaultDatabaseName: 'wordpress',
+      instances: 1,
       instanceProps: {
         instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MEDIUM),
         vpcSubnets: {
