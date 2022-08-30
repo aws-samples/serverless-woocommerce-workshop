@@ -114,6 +114,9 @@ Config::define('WP_REDIS_DATABASE', env('REDIS_DATABASE'));
 // bypass the object cache, useful for debugging
 Config::define('WP_REDIS_DISABLED', env('REDIS_DISABLED'));
 
+// Default theme
+Config::define('WP_DEFAULT_THEME', 'blocksy');
+
 /**
  * Debugging Settings
  */
