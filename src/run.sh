@@ -3,7 +3,7 @@
 if [ -d "/srv/opcache" -a ! -d "/tmp/opcache" ]
 then
     mkdir /tmp/opcache
-    time cp -r /srv/opcache/* /tmp/opcache
+    umask 0000 && time cp -r /srv/opcache/* /tmp/opcache
 fi
 
 if [ ! -d '/mnt/share/uploads' ]
