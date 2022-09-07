@@ -183,7 +183,12 @@ export class WooCommerceStack extends Stack {
     const wcFunction = new lambda.DockerImageFunction(this, "woocommerce", {
       architecture: lambda.Architecture.X86_64,
       code: lambda.DockerImageCode.fromImageAsset(
-        path.join(__dirname, "..", "..", "src")
+        path.join(__dirname, "..", "..", "src"), 
+        {
+          buildArgs: {
+            'DISABLE_OPCACHE_PRE_COMPILATION': this.node.tryGetContext("DISABLE_OPCACHE_PRE_COMPILATION")
+          }
+        }
       ),
       memorySize: 1024,
       timeout: Duration.seconds(300),
