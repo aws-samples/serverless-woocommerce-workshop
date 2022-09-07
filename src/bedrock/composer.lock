@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19c8aa214e4673a2ec611521c0da53a0",
+    "content-hash": "543e7e8418a41e716097e8c640a3a9e0",
     "packages": [
         {
             "name": "composer/installers",
@@ -1154,42 +1154,6 @@
             "homepage": "https://wordpress.org/plugins/blocksy-companion/"
         },
         {
-            "name": "wpackagist-plugin/cartflows",
-            "version": "1.10.4",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/cartflows/",
-                "reference": "tags/1.10.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/cartflows.1.10.4.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/cartflows/"
-        },
-        {
-            "name": "wpackagist-plugin/elementor",
-            "version": "3.7.3",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/elementor/",
-                "reference": "tags/3.7.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/elementor.3.7.3.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/elementor/"
-        },
-        {
             "name": "wpackagist-plugin/query-monitor",
             "version": "3.9.0",
             "source": {
@@ -1244,60 +1208,6 @@
             "homepage": "https://wordpress.org/plugins/stackable-ultimate-gutenberg-blocks/"
         },
         {
-            "name": "wpackagist-plugin/variation-swatches-for-woocommerce",
-            "version": "2.1.6",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/variation-swatches-for-woocommerce/",
-                "reference": "tags/2.1.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/variation-swatches-for-woocommerce.2.1.6.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/variation-swatches-for-woocommerce/"
-        },
-        {
-            "name": "wpackagist-plugin/woo-discount-rules",
-            "version": "2.4.4",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/woo-discount-rules/",
-                "reference": "tags/2.4.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woo-discount-rules.2.4.4.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/woo-discount-rules/"
-        },
-        {
-            "name": "wpackagist-plugin/woo-photo-reviews",
-            "version": "1.2.2",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/woo-photo-reviews/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woo-photo-reviews.zip?timestamp=1661589030"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/woo-photo-reviews/"
-        },
-        {
             "name": "wpackagist-plugin/woocommerce",
             "version": "6.4.1",
             "source": {
@@ -1314,24 +1224,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/woocommerce/"
-        },
-        {
-            "name": "wpackagist-plugin/woocommerce-paypal-payments",
-            "version": "1.9.3",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/woocommerce-paypal-payments/",
-                "reference": "tags/1.9.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woocommerce-paypal-payments.1.9.3.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/woocommerce-paypal-payments/"
         },
         {
             "name": "wpackagist-plugin/wpforms-lite",
@@ -1352,24 +1244,6 @@
             "homepage": "https://wordpress.org/plugins/wpforms-lite/"
         },
         {
-            "name": "wpackagist-theme/astra",
-            "version": "3.8.0",
-            "source": {
-                "type": "svn",
-                "url": "https://themes.svn.wordpress.org/astra/",
-                "reference": "3.8.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/astra.3.8.0.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-theme",
-            "homepage": "https://wordpress.org/themes/astra/"
-        },
-        {
             "name": "wpackagist-theme/blocksy",
             "version": "1.8.31",
             "source": {
@@ -1388,24 +1262,6 @@
             "homepage": "https://wordpress.org/themes/blocksy/"
         },
         {
-            "name": "wpackagist-theme/hello-elementor",
-            "version": "2.6.1",
-            "source": {
-                "type": "svn",
-                "url": "https://themes.svn.wordpress.org/hello-elementor/",
-                "reference": "2.6.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/hello-elementor.2.6.1.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-theme",
-            "homepage": "https://wordpress.org/themes/hello-elementor/"
-        },
-        {
             "name": "wpackagist-theme/storefront",
             "version": "4.1.0",
             "source": {
@@ -1422,24 +1278,6 @@
             },
             "type": "wordpress-theme",
             "homepage": "https://wordpress.org/themes/storefront/"
-        },
-        {
-            "name": "wpackagist-theme/woostify",
-            "version": "2.1.4",
-            "source": {
-                "type": "svn",
-                "url": "https://themes.svn.wordpress.org/woostify/",
-                "reference": "2.1.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/woostify.2.1.4.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-theme",
-            "homepage": "https://wordpress.org/themes/woostify/"
         }
     ],
     "packages-dev": [

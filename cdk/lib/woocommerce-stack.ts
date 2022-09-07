@@ -216,6 +216,7 @@ export class WooCommerceStack extends Stack {
         WP_ENV: this.node.tryGetContext("WP_ENV"),
         WP_HOME: this.node.tryGetContext("WP_HOME"),
         WP_SITEURL: this.node.tryGetContext("WP_SITEURL"),
+        WP_DEFAULT_THEME: this.node.tryGetContext("WP_DEFAULT_THEME"),
         DISABLE_WP_CRON: "false",
         AUTH_KEY: this.node.tryGetContext("AUTH_KEY"),
         SECURE_AUTH_KEY: this.node.tryGetContext("SECURE_AUTH_KEY"),

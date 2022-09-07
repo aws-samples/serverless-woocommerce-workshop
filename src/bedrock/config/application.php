@@ -115,7 +115,7 @@ Config::define('WP_REDIS_DATABASE', env('REDIS_DATABASE'));
 Config::define('WP_REDIS_DISABLED', env('REDIS_DISABLED'));
 
 // Default theme
-Config::define('WP_DEFAULT_THEME', 'blocksy');
+Config::define('WP_DEFAULT_THEME', env('WP_DEFAULT_THEME'));
 
 /**
  * Debugging Settings
