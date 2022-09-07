@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  web:
+    build: src
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./tmp/efs:/mnt/share
+      - ./tmp/tmp:/tmp
+    links:
+      - mysql
+      - redis
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      REDIS_CFG_ENDPOINT: 'redis'
+      REDIS_PORT: 6379
+      DB_HOST: 'mysql'
+      DB_NAME: 'mysql'
+      DB_USER: 'root'
+      DB_PASSWORD: 'root'
+      EFS_PATH: '/mnt/share'
+      WP_HOME: http://localhost:8080
+      WP_SITEURL: http://localhost:8080/wp
+      WP_ENV: development
+    user: 1095:1095
+    read_only: true
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: root
+      MYSQL_ROOT_PASSWORD: root
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./tmp/redis:/data
+    command: redis-server --appendonly yes
