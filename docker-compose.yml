@@ -23,7 +23,9 @@ services:
       EFS_PATH: '/mnt/share'
       WP_HOME: http://localhost:8080
       WP_SITEURL: http://localhost:8080/wp
-      WP_ENV: development
+      WP_ENV: production
+      WP_DEFAULT_THEME: blocksy
+      DISABLE_OPCACHE_PRE_COMPILATION: false
     user: 1095:1095
     read_only: true
   mysql:

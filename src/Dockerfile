@@ -2,21 +2,18 @@
 
 FROM public.ecr.aws/amazonlinux/amazonlinux:2.0.20220805.0 as builder
 
-ADD run.sh /srv/run.sh
-ADD bedrock/ /srv/bedrock/
-ADD opcache/ /srv/opcache/
-
 RUN <<EOF
-    amazon-linux-extras install -y nginx1 php8.0
+    amazon-linux-extras install -y nginx1 php7.4
     yum groupinstall -y "Development Tools"
-    yum install -y php-devel git tar libzstd-devel php-{opcache,curl,gd,intl,mbstring,soap,xml,zip,dom,imagick,posix,pear}
+    yum install -y php-devel php-{opcache,curl,gd,intl,mbstring,soap,xml,zip,dom,imagick,posix,pear} php-pecl-{igbinary,redis}
     yum clean all && rm -rf /var/cache/yum
-    pecl install igbinary
-    printf "yes\nno\nyes\n" | pecl install redis
     curl -sS https://raw.githubusercontent.com/composer/getcomposer.org/9bef96e8ce65b79bd29c525fa918980889c9a124/web/installer | php -- --quiet
     mv composer.phar /usr/local/bin/composer
 EOF
 
+ADD run.sh /srv/run.sh
+ADD bedrock/ /srv/bedrock/
+ADD opcache/ /srv/opcache/
 
 RUN cd /srv/bedrock && composer install --no-dev
 
@@ -25,20 +22,16 @@ COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.3.3 /lambda-adapter /opt
 ARG DISABLE_OPCACHE_PRE_COMPILATION=false
 
 RUN <<EOF
-    amazon-linux-extras install -y nginx1 php8.0 
-    yum install -y libzstd-devel php-{opcache,curl,gd,intl,mbstring,soap,xml,zip,dom,imagick,posix}
+    amazon-linux-extras install -y nginx1 php7.4
+    yum install -y php-{opcache,curl,gd,intl,mbstring,soap,xml,zip,dom,imagick,posix} php-pecl-{igbinary,redis}
     yum clean all && rm -rf /var/cache/yum
 EOF
 
 ADD config/nginx/ /etc/nginx/
 ADD config/php/ /etc/
 COPY --from=builder /srv /srv
-COPY --from=builder /usr/lib64/php/modules/. /usr/lib64/php/modules/
 
 RUN <<EOF
-    printf '[redis]\nextension=/usr/lib64/php/modules/redis.so\n' >> /etc/php.d/redis.ini
-    printf '[igbinary]\nextension=/usr/lib64/php/modules/igbinary.so\n' >> /etc/php.d/igbinary.ini
-
     if [[ "${DISABLE_OPCACHE_PRE_COMPILATION}" = "false" ]]; 
     then 
         mkdir /tmp/opcache 
