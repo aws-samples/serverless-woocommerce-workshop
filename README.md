@@ -1,6 +1,6 @@
 # Serverless WooCommerce
 
-This is the code used for Serverless WooCommerce Workshop. Please find the detailed workshop guide [here](https://catalog.us-east-1.prod.workshops.aws/workshops/4dcb57f0-9831-452f-bd59-d03eb98ea063). 
+This is the code used for Serverless WooCommerce Workshop. Please find the detailed workshop guide [here](https://catalog.workshops.aws/serverless-woocommerce/en-US). 
 
 
 ## Prerequisites
