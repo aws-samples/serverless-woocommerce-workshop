@@ -15,7 +15,7 @@ ADD run.sh /srv/run.sh
 ADD bedrock/ /srv/bedrock/
 ADD opcache/ /srv/opcache/
 
-RUN cd /srv/bedrock && composer install --no-dev
+RUN cd /srv/bedrock && COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev
 
 FROM public.ecr.aws/amazonlinux/amazonlinux:2.0.20220805.0
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.3.3 /lambda-adapter /opt/extensions/lambda-adapter
